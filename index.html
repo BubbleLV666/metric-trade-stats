@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Metric Trade Stats</title>
+<meta name="description" content="Unofficial statistics of a wallet on Metric (onchain liquidity pools): swap volume, liquidity deposits per pool and full history, read straight from the chain.">
+<link rel="icon" type="image/svg+xml" href="metric-logo.svg">
+<meta name="theme-color" content="#111110">
+<script src="theme.js"></script>
+<link rel="stylesheet" href="style.css?v=1">
+<link rel="stylesheet" href="theme.css?v=1">
+<link rel="stylesheet" href="extra.css?v=1">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="./" title="Metric Trade Stats"><img class="mlogo" src="metric-logo.svg" alt="" width="30" height="30"><h1>Metric</h1><h1 class="thin">Trade Stats</h1><span class="badge">unofficial</span></a>
+    <span id="plat" class="plat" tabindex="0" hidden>Platform volume 24h <b id="platVol24" class="num">—</b><span class="platsep"></span>7d <b id="platVol7" class="num">—</b><span class="plattip" id="platTip"></span></span>
+    <span class="sp"></span>
+    <button id="btnTheme" class="btn" title="Theme">◐</button>
+  </header>
+
+  <form id="form" class="search" autocomplete="off">
+    <input id="addr" type="text" spellcheck="false" placeholder="Wallet address 0x…" aria-label="Wallet address" autocomplete="off">
+    <select id="chain" aria-label="Network" title="Network"></select>
+    <input id="rpcUrl" type="text" spellcheck="false" placeholder="RPC URL that allows browser access" aria-label="RPC URL" hidden>
+  </form>
+  <div class="actions">
+    <button class="btn primary" id="btnCsv" type="button">Load explorer CSV…</button>
+    <input id="csvFile" type="file" accept=".csv,.txt,text/csv,text/plain" hidden>
+    <span class="muted hint">or drop the CSV file anywhere on the page · Enter shows only the current positions</span>
+  </div>
+  <details id="howto" class="panel howto" open>
+    <summary>How to get the CSV (1 minute)</summary>
+    <ol>
+      <li>Open your address on the block explorer of the network: <code>robin.etherscan.io</code> (Robinhood), <code>etherscan.io</code> (Ethereum) or <code>bscscan.com</code> (BNB Chain).</li>
+      <li>On the <b>Transactions</b> tab press <b>Download CSV Export</b> (under the list of transactions, or the download icon above it).</li>
+      <li>Pick the whole period, leave the type as ordinary <b>Transactions</b>, confirm the captcha and download the file. It is called <code>export-0x….csv</code>.</li>
+      <li>Drop the file on this page or press <b>Load explorer CSV…</b>. The page reads only these transactions from the chain, so it takes a few seconds. The wallet address is taken from the file name.</li>
+    </ol>
+    <p class="muted">Download the file again whenever you want fresh data: the page does not follow new transactions by itself. The explorer may limit the export to the newest few thousand rows.</p>
+  </details>
+  <div id="recent" class="recent"></div>
+  <div class="periodbar" id="periodbar" aria-label="Period for swaps"></div>
+  <div id="status" class="status" role="status"></div>
+
+  <main id="out" class="out"></main>
+
+  <section id="welcome" class="welcome">
+    <h2>Your Metric swaps and liquidity, from the chain</h2>
+    <p>Metric has no wallet API, but every swap and every deposit into a pool is an event on the blockchain. Enter your address and load the transaction list exported from the explorer: the page shows your liquidity positions per pool and the history of your swaps with their volume.</p>
+    <p class="muted">Everything runs in your browser. The address is sent only to the Metric API (pool list, prices, positions) and to the public RPC of the chain. USD values use the current prices of the Metric API.</p>
+  </section>
+
+  <footer>
+    Unofficial project, not affiliated with Metric. Data: <code>api.metric.xyz</code> and the public RPC of the network. Liquidity shows what was deposited and withdrawn, not the present value of a position.
+  </footer>
+</div>
+<script src="app.js?v=12"></script>
+</body>
+</html>
